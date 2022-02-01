@@ -13,7 +13,7 @@
 
 import unittest
 
-from py_expression_eval import Parser
+from physical_evaluator import Parser
 
 
 class ParserTestCase(unittest.TestCase):

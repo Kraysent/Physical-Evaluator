@@ -55,34 +55,34 @@ def concat(a, b,*args):
 def equal (a, b ):
     return a == b
 
-def notEqual (a, b ):
+def not_equal (a, b ):
     return a != b
 
-def greaterThan (a, b ):
+def greater_than (a, b ):
     return a > b
 
-def lessThan (a, b ):
+def less_than (a, b ):
     return a < b
 
-def greaterThanEqual (a, b ):
+def greater_than_equal (a, b ):
     return a >= b
 
-def lessThanEqual (a, b ):
+def less_than_equal (a, b ):
     return a <= b
 
-def andOperator (a, b ):
+def and_operator (a, b ):
     return ( a and b )
 
-def orOperator (a, b ):
+def or_operator (a, b ):
     return  ( a or  b )
 
-def xorOperator (a, b ):
+def xor_operator (a, b ):
     return  ( a ^ b )
 
-def inOperator(a, b):
+def in_operator(a, b):
     return a in b
 
-def notOperator(a):
+def not_operator(a):
     return not a
 
 def neg(a):
@@ -144,7 +144,7 @@ def roll(a, b):
         rolls.append(roll)
     return rolls
 
-def if_function(self,a,b,c):
+def if_function(a, b, c):
     return b if a else c
 
 def append(a, b):
@@ -172,7 +172,7 @@ unary_functions = {
     'floor': floor,
     'round': round,
     '-': neg,
-    'not': notOperator,
+    'not': not_operator,
     'exp': exp,
 }
 
@@ -187,14 +187,32 @@ binary_functions = {
     ',': append,
     '||': concat,
     "==": equal,
-    "!=": notEqual,
-    ">": greaterThan,
-    "<": lessThan,
-    ">=": greaterThanEqual,
-    "<=": lessThanEqual,
-    "and": andOperator,
-    "or": orOperator,
-    "xor": xorOperator,
-    "in": inOperator,
+    "!=": not_equal,
+    ">": greater_than,
+    "<": less_than,
+    ">=": greater_than_equal,
+    "<=": less_than_equal,
+    "and": and_operator,
+    "or": or_operator,
+    "xor": xor_operator,
+    "in": in_operator,
     "D": roll
+}
+
+functions = {
+    'random': random,
+    'fac': fac,
+    'log': log,
+    'min': min,
+    'max': max,
+    'pyt': pyt,
+    'pow': pow,
+    'atan2': atan2,
+    'concat': concat,
+    'if': if_function
+}
+
+constants = {
+    'E': math.e,
+    'PI': math.pi,
 }

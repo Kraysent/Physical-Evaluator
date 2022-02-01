@@ -3,9 +3,9 @@ from __future__ import division
 import math
 import re
 
-import py_expression_eval.standart_functions as funcs
-from py_expression_eval.expression import Expression
-from py_expression_eval.token import *
+import physical_evaluator.standart_functions as funcs
+from physical_evaluator.expression import Expression
+from physical_evaluator.token import *
 
 
 def substitute(self, variable, expr):
@@ -47,7 +47,6 @@ class Parser:
     CALL         = 128
     NULLARY_CALL = 256
 
-
     def __init__(self, string_literal_quotes = ("'", "\"")):
         self.string_literal_quotes = string_literal_quotes
 
@@ -63,28 +62,11 @@ class Parser:
         self.tmpprio = 0
 
         self.ops1 = funcs.unary_functions
-
         self.ops2 = funcs.binary_functions
+        self.functions = funcs.functions
+        self.consts = funcs.constants
 
-        self.functions = {
-            'random': funcs.random,
-            'fac': funcs.fac,
-            'log': funcs.log,
-            'min': funcs.min,
-            'max': funcs.max,
-            'pyt': funcs.pyt,
-            'pow': funcs.pow,
-            'atan2': funcs.atan2,
-            'concat': funcs.concat,
-            'if': funcs.if_function
-        }
-
-        self.consts = {
-            'E': math.e,
-            'PI': math.pi,
-        }
-
-    def parse(self, expr):
+    def parse(self, expr: str):
         self.errormsg = ''
         self.success = True
         operstack = []
@@ -357,8 +339,6 @@ class Parser:
             ('^', 8, '^'),
             ('%', 6, '%'),
             ('/', 6, '/'),
-            (u'\u2219', 5, '*'), # bullet operator
-            (u'\u2022', 5, '*'), # black small circle
             ('*', 5, '*'),
             ('+', 4, '+'),
             ('-', 4, '-'),

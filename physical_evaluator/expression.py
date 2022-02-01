@@ -1,4 +1,4 @@
-from py_expression_eval.token import *
+from physical_evaluator.token import *
 
 class Expression:
     def __init__(self, tokens, ops1, ops2, functions):
@@ -41,8 +41,6 @@ class Expression:
             newexpression.append(nstack.pop(0))
 
         return Expression(newexpression, self.ops1, self.ops2, self.functions)
-
-    
 
     def evaluate(self, values):
         values = values or {}

@@ -5,11 +5,11 @@ TVAR = 3
 TFUNCALL = 4
 
 class Token:
-    def __init__(self, type_, index_, prio_, number_):
-        self.type_ = type_
-        self.index_ = index_ or 0
-        self.prio_ = prio_ or 0
-        self.number_ = number_ if number_ != None else 0
+    def __init__(self, type, index, prio, number):
+        self.type_ = type
+        self.index_ = index or 0
+        self.prio_ = prio or 0
+        self.number_ = number if number != None else 0
 
     def to_string(self):
         if self.type_ == TNUMBER:
