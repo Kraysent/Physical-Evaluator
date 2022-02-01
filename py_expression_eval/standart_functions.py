@@ -98,7 +98,7 @@ def pyt(a, b):
     return math.sqrt(a * a + b * b)
 
 def sin(a):
-    return math.sin
+    return math.sin(a)
 
 def sind(a):
     return math.sin(math.radians(a))
@@ -144,7 +144,7 @@ def roll(a, b):
         rolls.append(roll)
     return rolls
 
-def ifFunction(self,a,b,c):
+def if_function(self,a,b,c):
     return b if a else c
 
 def append(a, b):
@@ -152,3 +152,49 @@ def append(a, b):
         return [a, b]
     a.append(b)
     return a
+
+unary_functions = {
+    'sin': sin,
+    'cos': cos,
+    'tan': tan,
+    'asin': asin,
+    'acos': acos,
+    'atan': atan,
+    'sind': sind,
+    'cosd': cosd,
+    'tand': tand,
+    'asind': asind,
+    'acosd': acosd,
+    'atand': atand,
+    'sqrt': sqrt,
+    'abs': abs,
+    'ceil': ceil,
+    'floor': floor,
+    'round': round,
+    '-': neg,
+    'not': notOperator,
+    'exp': exp,
+}
+
+binary_functions = {
+    '+': add,
+    '-': sub,
+    '*': mul,
+    '/': div,
+    '%': mod,
+    '^': pow,
+    '**': pow,
+    ',': append,
+    '||': concat,
+    "==": equal,
+    "!=": notEqual,
+    ">": greaterThan,
+    "<": lessThan,
+    ">=": greaterThanEqual,
+    "<=": lessThanEqual,
+    "and": andOperator,
+    "or": orOperator,
+    "xor": xorOperator,
+    "in": inOperator,
+    "D": roll
+}

@@ -110,12 +110,12 @@ class ParserTestCase(unittest.TestCase):
 
         # test simplify
         expr = parser.parse('x * (y * atan(1))').simplify({'y': 4})
-        self.assertIn('x*3.141592', expr.toString())
+        self.assertIn('x*3.141592', expr.to_string())
         self.assertExactEqual(expr.evaluate({'x': 2}), 6.283185307179586)
 
         # test toString with string constant
         expr = parser.parse("'a'=='b'")
-        self.assertIn("'a'=='b'", expr.toString())
+        self.assertIn("'a'=='b'", expr.to_string())
         self.assertIn("'a'=='b'", "%s" % expr)
         expr = parser.parse("concat('a\n','\n','\rb')=='a\n\n\rb'")
         self.assertEqual(expr.evaluate({}), True)
@@ -264,7 +264,7 @@ class ParserTestCase(unittest.TestCase):
     def test_to_string(self):
         parser = Parser()
 
-        self.assertEqual(parser.parse("-12 * a + -2").toString(), '(((-12)*a)+(-2))')
+        self.assertEqual(parser.parse("-12 * a + -2").to_string(), '(((-12)*a)+(-2))')
 
 
 if __name__ == '__main__':
