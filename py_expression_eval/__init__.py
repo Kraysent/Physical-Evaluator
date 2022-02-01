@@ -10,11 +10,13 @@
 # You are free to use and modify this code in anyway you find useful. Please leave this comment in the code
 # to acknowledge its original source. If you feel like it, I enjoy hearing about projects that use my code,
 # but don't feel like you have to let me know or ask permission.
+
 from __future__ import division
 
 import math
 import random
 import re
+import standart_functions as funcs
 
 TNUMBER = 0
 TOP1 = 1
@@ -24,7 +26,6 @@ TFUNCALL = 4
 
 
 class Token():
-
     def __init__(self, type_, index_, prio_, number_):
         self.type_ = type_
         self.index_ = index_ or 0
@@ -43,7 +44,6 @@ class Token():
 
 
 class Expression():
-
     def __init__(self, tokens, ops1, ops2, functions):
         self.tokens = tokens
         self.ops1 = ops1
@@ -213,7 +213,6 @@ class Expression():
 
 
 class Parser:
-
     class Expression(Expression):
         pass
 
@@ -227,110 +226,6 @@ class Parser:
     CALL         = 128
     NULLARY_CALL = 256
 
-    def add(self, a, b):
-        return a + b
-
-    def sub(self, a, b):
-        return a - b
-
-    def mul(self, a, b):
-        return a * b
-
-    def div(self, a, b):
-        return a / b
-
-    def pow(self, a, b):
-        return a ** b
-
-    def mod(self, a, b):
-        return a % b
-
-    def concat(self, a, b,*args):
-        result=u'{0}{1}'.format(a, b)
-        for arg in args:
-            result=u'{0}{1}'.format(result, arg)
-        return result
-
-    def equal (self, a, b ):
-        return a == b
-
-    def notEqual (self, a, b ):
-        return a != b
-
-    def greaterThan (self, a, b ):
-        return a > b
-
-    def lessThan (self, a, b ):
-        return a < b
-
-    def greaterThanEqual (self, a, b ):
-        return a >= b
-
-    def lessThanEqual (self, a, b ):
-        return a <= b
-
-    def andOperator (self, a, b ):
-        return ( a and b )
-
-    def orOperator (self, a, b ):
-        return  ( a or  b )
-
-    def xorOperator (self, a, b ):
-        return  ( a ^ b )
-
-    def inOperator(self, a, b):
-        return a in b
-
-    def notOperator(self, a):
-        return not a
-
-    def neg(self, a):
-        return -a
-
-    def random(self, a):
-        return random.random() * (a or 1)
-
-    def fac(self, a):  # a!
-        return math.factorial(a)
-
-    def pyt(self, a, b):
-        return math.sqrt(a * a + b * b)
-
-    def sind(self, a):
-        return math.sin(math.radians(a))
-
-    def cosd(self, a):
-        return math.cos(math.radians(a))
-
-    def tand(self, a):
-        return math.tan(math.radians(a))
-
-    def asind(self, a):
-        return math.degrees(math.asin(a))
-
-    def acosd(self, a):
-        return math.degrees(math.acos(a))
-
-    def atand(self, a):
-        return math.degrees(math.atan(a))
-
-    def roll(self, a, b):
-        rolls = []
-        roll = 0
-        final = 0
-        for c in range(1, a):
-            roll = random.randint(1, b)
-            rolls.append(roll)
-        return rolls
-
-    def ifFunction(self,a,b,c):
-        return b if a else c
-
-    def append(self, a, b):
-        if type(a) != list:
-            return [a, b]
-        a.append(b)
-        return a
 
     def __init__(self, string_literal_quotes = ("'", "\"")):
         self.string_literal_quotes = string_literal_quotes
@@ -347,64 +242,62 @@ class Parser:
         self.tmpprio = 0
 
         self.ops1 = {
-            'sin': math.sin,
-            'cos': math.cos,
-            'tan': math.tan,
-            'asin': math.asin,
-            'acos': math.acos,
+            'sin': funcs.sin,
+            'cos': funcs.cos,
+            'tan': funcs.tan,
+            'asin': funcs.asin,
+            'acos': funcs.acos,
             'atan': math.atan,
-
-            'sind': self.sind,
-            'cosd': self.cosd,
-            'tand': self.tand,
-            'asind': self.asind,
-            'acosd': self.acosd,
-            'atand': self.atand,
-
-            'sqrt': math.sqrt,
-            'abs': abs,
-            'ceil': math.ceil,
-            'floor': math.floor,
-            'round': round,
-            '-': self.neg,
-            'not': self.notOperator,
-            'exp': math.exp,
+            'sind': funcs.sind,
+            'cosd': funcs.cosd,
+            'tand': funcs.tand,
+            'asind': funcs.asind,
+            'acosd': funcs.acosd,
+            'atand': funcs.atand,
+            'sqrt': funcs.sqrt,
+            'abs': funcs.abs,
+            'ceil': funcs.ceil,
+            'floor': funcs.floor,
+            'round': funcs.round,
+            '-': funcs.neg,
+            'not': funcs.notOperator,
+            'exp': funcs.exp,
         }
 
         self.ops2 = {
-            '+': self.add,
-            '-': self.sub,
-            '*': self.mul,
-            '/': self.div,
-            '%': self.mod,
-            '^': self.pow,
-            '**': self.pow,
-            ',': self.append,
-            '||': self.concat,
-            "==": self.equal,
-            "!=": self.notEqual,
-            ">": self.greaterThan,
-            "<": self.lessThan,
-            ">=": self.greaterThanEqual,
-            "<=": self.lessThanEqual,
-            "and": self.andOperator,
-            "or": self.orOperator,
-            "xor": self.xorOperator,
-            "in": self.inOperator,
-            "D": self.roll
+            '+': funcs.add,
+            '-': funcs.sub,
+            '*': funcs.mul,
+            '/': funcs.div,
+            '%': funcs.mod,
+            '^': funcs.pow,
+            '**': funcs.pow,
+            ',': funcs.append,
+            '||': funcs.concat,
+            "==": funcs.equal,
+            "!=": funcs.notEqual,
+            ">": funcs.greaterThan,
+            "<": funcs.lessThan,
+            ">=": funcs.greaterThanEqual,
+            "<=": funcs.lessThanEqual,
+            "and": funcs.andOperator,
+            "or": funcs.orOperator,
+            "xor": funcs.xorOperator,
+            "in": funcs.inOperator,
+            "D": funcs.roll
         }
 
         self.functions = {
-            'random': self.random,
-            'fac': self.fac,
-            'log': math.log,
-            'min': min,
-            'max': max,
-            'pyt': self.pyt,
-            'pow': math.pow,
-            'atan2': math.atan2,
-            'concat':self.concat,
-            'if': self.ifFunction
+            'random': funcs.random,
+            'fac': funcs.fac,
+            'log': funcs.log,
+            'min': funcs.min,
+            'max': funcs.max,
+            'pyt': funcs.pyt,
+            'pow': funcs.pow,
+            'atan2': funcs.atan2,
+            'concat': funcs.concat,
+            'if': funcs.ifFunction
         }
 
         self.consts = {
@@ -413,26 +306,26 @@ class Parser:
         }
 
         self.values = {
-            'sin': math.sin,
-            'cos': math.cos,
-            'tan': math.tan,
-            'asin': math.asin,
-            'acos': math.acos,
-            'atan': math.atan,
-            'sqrt': math.sqrt,
-            'log': math.log,
-            'abs': abs,
-            'ceil': math.ceil,
-            'floor': math.floor,
-            'round': round,
-            'random': self.random,
-            'fac': self.fac,
-            'exp': math.exp,
-            'min': min,
-            'max': max,
-            'pyt': self.pyt,
-            'pow': math.pow,
-            'atan2': math.atan2,
+            'sin': funcs.sin,
+            'cos': funcs.cos,
+            'tan': funcs.tan,
+            'asin': funcs.asin,
+            'acos': funcs.acos,
+            'atan': funcs.atan,
+            'sqrt': funcs.sqrt,
+            'log': funcs.log,
+            'abs': funcs.abs,
+            'ceil': funcs.ceil,
+            'floor': funcs.floor,
+            'round': funcs.round,
+            'random': funcs.random,
+            'fac': funcs.fac,
+            'exp': funcs.exp,
+            'min': funcs.min,
+            'max': funcs.max,
+            'pyt': funcs.pyt,
+            'pow': funcs.pow,
+            'atan2': funcs.atan2,
             'E': math.e,
             'PI': math.pi
         }
@@ -456,89 +349,91 @@ class Parser:
                         self.tokenindex = '-'
                         noperators += 1
                         self.addfunc(tokenstack, operstack, TOP1)
-                    expected = \
-                        self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
+
+                    expected = self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
                 elif self.isLogicalNot() and expected & self.SIGN:
                     self.tokenprio = 2
                     self.tokenindex = 'not'
                     noperators += 1
                     self.addfunc(tokenstack, operstack, TOP1)
-                    expected = \
-                        self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
+                    expected = self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
                 elif self.isComment():
                     pass
                 else:
                     if expected and self.OPERATOR == 0:
                         self.error_parsing(self.pos, 'unexpected operator')
+
                     noperators += 2
                     self.addfunc(tokenstack, operstack, TOP2)
-                    expected = \
-                        self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
+                    expected = self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
             elif self.isNumber():
                 if expected and self.PRIMARY == 0:
                     self.error_parsing(self.pos, 'unexpected number')
+
                 token = Token(TNUMBER, 0, 0, self.tokennumber)
                 tokenstack.append(token)
                 expected = self.OPERATOR | self.RPAREN | self.COMMA
             elif self.isString():
                 if (expected & self.PRIMARY) == 0:
                     self.error_parsing(self.pos, 'unexpected string')
+
                 token = Token(TNUMBER, 0, 0, self.tokennumber)
                 tokenstack.append(token)
                 expected = self.OPERATOR | self.RPAREN | self.COMMA
             elif self.isLeftParenth():
                 if (expected & self.LPAREN) == 0:
                     self.error_parsing(self.pos, 'unexpected \"(\"')
+
                 if expected & self.CALL:
                     noperators += 2
                     self.tokenprio = -2
                     self.tokenindex = -1
                     self.addfunc(tokenstack, operstack, TFUNCALL)
-                expected = \
-                    self.PRIMARY | self.LPAREN | self.FUNCTION | \
-                    self.SIGN | self.NULLARY_CALL
+
+                expected = self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN | self.NULLARY_CALL
             elif self.isRightParenth():
                 if expected & self.NULLARY_CALL:
                     token = Token(TNUMBER, 0, 0, [])
                     tokenstack.append(token)
                 elif (expected & self.RPAREN) == 0:
                     self.error_parsing(self.pos, 'unexpected \")\"')
-                expected = \
-                    self.OPERATOR | self.RPAREN | self.COMMA | \
-                    self.LPAREN | self.CALL
+
+                expected = self.OPERATOR | self.RPAREN | self.COMMA | self.LPAREN | self.CALL
             elif self.isComma():
                 if (expected & self.COMMA) == 0:
                     self.error_parsing(self.pos, 'unexpected \",\"')
+
                 self.addfunc(tokenstack, operstack, TOP2)
                 noperators += 2
-                expected = \
-                    self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
+                expected = self.PRIMARY | self.LPAREN | self.FUNCTION | self.SIGN
             elif self.isConst():
                 if (expected & self.PRIMARY) == 0:
                     self.error_parsing(self.pos, 'unexpected constant')
+
                 consttoken = Token(TNUMBER, 0, 0, self.tokennumber)
                 tokenstack.append(consttoken)
                 expected = self.OPERATOR | self.RPAREN | self.COMMA
             elif self.isOp2():
                 if (expected & self.FUNCTION) == 0:
                     self.error_parsing(self.pos, 'unexpected function')
+
                 self.addfunc(tokenstack, operstack, TOP2)
                 noperators += 2
                 expected = self.LPAREN
             elif self.isOp1():
                 if (expected & self.FUNCTION) == 0:
                     self.error_parsing(self.pos, 'unexpected function')
+
                 self.addfunc(tokenstack, operstack, TOP1)
                 noperators += 1
                 expected = self.LPAREN
             elif self.isVar():
                 if (expected & self.PRIMARY) == 0:
                     self.error_parsing(self.pos, 'unexpected variable')
+
                 vartoken = Token(TVAR, self.tokenindex, 0, 0)
                 tokenstack.append(vartoken)
-                expected = \
-                    self.OPERATOR | self.RPAREN | \
-                    self.COMMA | self.LPAREN | self.CALL
+                expected = self.OPERATOR | self.RPAREN | self.COMMA | self.LPAREN | self.CALL
             elif self.isWhite():
                 pass
             else:
@@ -562,6 +457,7 @@ class Parser:
     def error_parsing(self, column, msg):
         self.success = False
         self.errormsg = 'parse error [column ' + str(column) + ']: ' + msg + ', expression: ' + self.expression
+
         raise Exception(self.errormsg)
 
     def addfunc(self, tokenstack, operstack, type_):
@@ -576,6 +472,7 @@ class Parser:
                 tokenstack.append(operstack.pop())
             else:
                 break
+
         operstack.append(operator)
 
     def isNumber(self):
@@ -667,9 +564,11 @@ class Parser:
         r = False
         str = ''
         startpos = self.pos
+
         if self.pos < len(self.expression) and self.expression[self.pos] in self.string_literal_quotes:
             quote_type = self.expression[self.pos]
             self.pos += 1
+
             while self.pos < len(self.expression):
                 code = self.expression[self.pos]
                 if code != quote_type or (str != '' and str[-1] == '\\'):
@@ -721,12 +620,14 @@ class Parser:
             ('xor ', 0, 'xor'),
             ('or ', 0, 'or'),
         )
+
         for token, priority, index in ops:
             if self.expression.startswith(token, self.pos):
                 self.tokenprio = priority
                 self.tokenindex = index
                 self.pos += len(token)
                 return True
+
         return False
 
     def isSign(self):
@@ -751,6 +652,7 @@ class Parser:
             self.pos += 1
             self.tmpprio += 10
             return True
+
         return False
 
     def isRightParenth(self):
@@ -759,6 +661,7 @@ class Parser:
             self.pos += 1
             self.tmpprio -= 10
             return True
+
         return False
 
     def isComma(self):
@@ -768,6 +671,7 @@ class Parser:
             self.tokenprio=-1
             self.tokenindex=","
             return True
+
         return False
 
     def isWhite(self):
@@ -775,61 +679,80 @@ class Parser:
         if code.isspace():
             self.pos += 1
             return True
+
         return False
 
     def isOp1(self):
         str = ''
+
         for i in range(self.pos, len(self.expression)):
             c = self.expression[i]
+
             if c.upper() == c.lower():
                 if i == self.pos or (c != '_' and (c < '0' or c > '9')):
                     break
+
             str += c
+
         if len(str) > 0 and str in self.ops1:
             self.tokenindex = str
             self.tokenprio = 9
             self.pos += len(str)
             return True
+
         return False
 
     def isOp2(self):
         str = ''
+
         for i in range(self.pos, len(self.expression)):
             c = self.expression[i]
             if c.upper() == c.lower():
                 if i == self.pos or (c != '_' and (c < '0' or c > '9')):
                     break
             str += c
+
         if len(str) > 0 and (str in self.ops2):
             self.tokenindex = str
             self.tokenprio = 9
             self.pos += len(str)
+
             return True
+
         return False
 
     def isVar(self):
         str = ''
         inQuotes = False
+
         for i in range(self.pos, len(self.expression)):
             c = self.expression[i]
             if c.lower() == c.upper():
                 if ((i == self.pos and c != '"') or (not (c in '_."') and (c < '0' or c > '9'))) and not inQuotes :
                     break
+
             if c == '"':
                 inQuotes = not inQuotes
             str += c
+
         if str:
             self.tokenindex = str
             self.tokenprio = 6
             self.pos += len(str)
+
             return True
+
         return False
 
     def isComment(self):
         code = self.expression[self.pos - 1]
+
         if code == '/' and self.expression[self.pos] == '*':
             self.pos = self.expression.index('*/', self.pos) + 2
+
             if self.pos == 1:
                 self.pos = len(self.expression)
+
             return True
+            
         return False
